@@ -103,16 +103,13 @@ class TextViewCell:UICollectionViewCell {
     }
     private func setupUI() {
         // 设置TextViewCell的UI
-//        backgroundColor = .systemBlue
-        layer.cornerRadius = 12
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.white.cgColor
+//        layer.borderColor = UIColor.white.cgColor
         // 2. 创建UITextView替换UILabel
         textView.text = "欢迎使用提词器" // 默认文本
         textView.textColor = .white
         textView.font = .boldSystemFont(ofSize: CGFloat(16))
         textView.isEditable = true // 禁止编辑（如需可编辑则设为true）
-        textView.backgroundColor = UIColor.black.withAlphaComponent(0.1)
+        textView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
         textView.layer.cornerRadius = 10
         contentView.addSubview(textView)
         textView.snp.makeConstraints { make in
@@ -135,25 +132,31 @@ class ButtonCell:UICollectionViewCell {
     }
     private func setupUI() {
         // 设置TextViewCell的UI
-        layer.cornerRadius = 12
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.white.cgColor
-        
-        button.backgroundColor = .systemBlue
+//        layer.borderWidth = 1
         contentView.addSubview(button)
-        
-        
         button.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
     public func increaseFontSizeTitle(){
-        self.button.setTitle("增大字体", for: .normal)
-        button.addTarget(self, action: #selector(didIncreaseButton), for: .touchUpInside) // 函数绑定
+        let config = UIImage.SymbolConfiguration(pointSize: 24)  // 设置图标大小为24pt
+        
+        let image = UIImage(systemName: "plus.magnifyingglass", withConfiguration: config)?
+                        .withTintColor(.white, renderingMode: .alwaysOriginal)
+
+        self.button.setImage(image, for: .normal)
+
+        button.addTarget(self, action: #selector(didIncreaseButton), for: .touchUpInside)
     }
     public func reduceFontSizeTitle(){
-        self.button.setTitle("减小字体", for: .normal)
+        let config = UIImage.SymbolConfiguration(pointSize: 24)  // 设置图标大小为24pt
+        
+        let image = UIImage(systemName: "minus.magnifyingglass", withConfiguration: config)?.withTintColor(.white, renderingMode: .alwaysOriginal)
+
+        self.button.setImage(image, for: .normal)
+
         button.addTarget(self, action: #selector(didReduceButton), for: .touchUpInside)
+
     }
     @objc private func didReduceButton() {
         // 减小字体
@@ -178,13 +181,8 @@ class CustomCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     private func setupUI() {
-        backgroundColor = .systemBlue
-        layer.cornerRadius = 12
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.white.cgColor
-        
         let label = UILabel()
-        label.text="UI"
+//        label.text="UI"
         label.textColor = .white
         label.font = .boldSystemFont(ofSize: 16)
         label.textAlignment = .center
@@ -206,9 +204,9 @@ class CustomCollectionViewCell: UICollectionViewCell {
 }
 
 class FlexibleUICollectionView: UIViewController{
-    private var collectionView: UICollectionView!
+    private var collectionView: UICollectionView!// view1
     private var resizeHandle: UIView!
-    private var containerView: UIView!
+    private var containerView: UIView!// 完全透明
     private var initialTouchPoint: CGPoint = .zero
     private var initialSize: CGSize = .zero
     private var fontSize = 16
@@ -221,14 +219,13 @@ class FlexibleUICollectionView: UIViewController{
     }
     
     private func setupContainerView() {
-        containerView = UIView()
-        containerView.backgroundColor = .lightGray
+        containerView = UIView()//
+        containerView.backgroundColor = .clear
+        containerView.alpha = 1
         containerView.layer.cornerRadius = 16
         containerView.clipsToBounds = true
         view.addSubview(containerView)
-        
-        
-        
+
         containerView.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.width.equalTo(300)
@@ -239,7 +236,9 @@ class FlexibleUICollectionView: UIViewController{
     private func setupCollectionView() {
         let layout = CustomCollectionViewLayout()
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
+        collectionView.backgroundColor = .lightGray
+        collectionView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.8)  // 背景半透明
+
         
         collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
         
@@ -286,8 +285,8 @@ class FlexibleUICollectionView: UIViewController{
             let deltaX = touchPoint.x - initialTouchPoint.x
             let deltaY = touchPoint.y - initialTouchPoint.y
             
-            let newWidth = max(100, initialSize.width + deltaX)
-            let newHeight = max(150, initialSize.height + deltaY)
+            let newWidth = max(150, initialSize.width + deltaX)
+            let newHeight = max(200, initialSize.height + deltaY)
             
             containerView.snp.updateConstraints { make in
                 make.width.equalTo(newWidth)
@@ -327,7 +326,7 @@ class FlexibleUICollectionView: UIViewController{
     }
     private func increaseFontSize(){
         self.fontSize = self.fontSize + 2
-        self.fontSize = min(30,self.fontSize)
+        self.fontSize = min(50,self.fontSize)
         updateTextFontSize()
     }
 
@@ -343,7 +342,6 @@ extension FlexibleUICollectionView: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 3 // 三行
     }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
             case 0: return 3 // 第一行3个
@@ -378,19 +376,10 @@ extension FlexibleUICollectionView: UICollectionViewDataSource {
             return cell
         }
         
-        
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: CustomCollectionViewCell.identifier,
             for: indexPath
         ) as! CustomCollectionViewCell
-        
-        // 根据部分设置不同颜色
-        switch indexPath.section {
-            case 0: cell.backgroundColor = .systemRed
-            case 1: cell.backgroundColor = .systemGreen
-            case 2: cell.backgroundColor = .systemPurple
-            default: break
-        }
         return cell
     }
 }
