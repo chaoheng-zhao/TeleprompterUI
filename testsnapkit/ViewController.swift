@@ -4,9 +4,9 @@ import UIKit
 class ViewController: UIViewController {
 //    let
     let flexibleUICollectionView = FlexibleUICollectionView()
-//    let uiExample = UIExample()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         addChild(flexibleUICollectionView)
         view.addSubview(flexibleUICollectionView.view)
         flexibleUICollectionView.didMove(toParent: self)

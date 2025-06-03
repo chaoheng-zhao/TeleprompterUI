@@ -48,12 +48,12 @@ class CustomCollectionViewLayout: UICollectionViewLayout {
         
         layoutAttributes.append(secondRowAttribute)
         
-        // 第三行 (3个cell)
-        for item in 0..<3 {
+        // 第三行 (4个cell)
+        for item in 0..<4 {
             let indexPath = IndexPath(item: item, section: 2)
             let attribute = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             
-            let width = (collectionView.bounds.width - 2 * padding - 2 * spacing) / 3
+            let width = (collectionView.bounds.width - 2 * padding - 2 * spacing) / 4
             
             let x = padding + CGFloat(item) * (width + spacing)
             let y = collectionView.bounds.height - padding - thirdRowHeight
@@ -89,6 +89,7 @@ class CustomCollectionViewLayout: UICollectionViewLayout {
 class TextViewCell:UICollectionViewCell {
     // 定义标识符
     static let identifier = "TextViewCell"
+    private let textView = UITextView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -97,6 +98,9 @@ class TextViewCell:UICollectionViewCell {
     required init?(coder:NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    public func setFontSize(fontSize:Int) {
+        self.textView.font = .systemFont(ofSize: CGFloat(fontSize))
+    }
     private func setupUI() {
         // 设置TextViewCell的UI
 //        backgroundColor = .systemBlue
@@ -104,10 +108,9 @@ class TextViewCell:UICollectionViewCell {
         layer.borderWidth = 1
         layer.borderColor = UIColor.white.cgColor
         // 2. 创建UITextView替换UILabel
-        let textView = UITextView()
         textView.text = "欢迎使用提词器" // 默认文本
         textView.textColor = .white
-        textView.font = .boldSystemFont(ofSize: 16)
+        textView.font = .boldSystemFont(ofSize: CGFloat(16))
         textView.isEditable = true // 禁止编辑（如需可编辑则设为true）
         textView.backgroundColor = UIColor.black.withAlphaComponent(0.1)
         textView.layer.cornerRadius = 10
@@ -116,16 +119,16 @@ class TextViewCell:UICollectionViewCell {
             make.edges.equalToSuperview()
         }
     }
-    
-    
 }
 class ButtonCell:UICollectionViewCell {
     static let identifier = "ButtonCell"
+    private let button = UIButton()
+    var onFontSizeIncreased: (() -> Void)?
+    var onFontSizeReduced: (() -> Void)?
     
     override init(frame: CGRect){
         super.init(frame: frame)
         setupUI()
-
     }
     required init?(coder:NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -136,14 +139,30 @@ class ButtonCell:UICollectionViewCell {
         layer.borderWidth = 1
         layer.borderColor = UIColor.white.cgColor
         
-        let button = UIButton()
-        button.setTitle("增大字体", for: .normal)
         button.backgroundColor = .systemBlue
         contentView.addSubview(button)
+        
+        
         button.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
+    public func increaseFontSizeTitle(){
+        self.button.setTitle("增大字体", for: .normal)
+        button.addTarget(self, action: #selector(didIncreaseButton), for: .touchUpInside) // 函数绑定
+    }
+    public func reduceFontSizeTitle(){
+        self.button.setTitle("减小字体", for: .normal)
+        button.addTarget(self, action: #selector(didReduceButton), for: .touchUpInside)
+    }
+    @objc private func didReduceButton() {
+        // 减小字体
+        onFontSizeReduced?()
+    }
+    @objc private func didIncreaseButton() {
+        onFontSizeIncreased?() // 字体增加
+    }
+    
 }
 
 
@@ -192,7 +211,7 @@ class FlexibleUICollectionView: UIViewController{
     private var containerView: UIView!
     private var initialTouchPoint: CGPoint = .zero
     private var initialSize: CGSize = .zero
-    
+    private var fontSize = 16
     override func viewDidLoad() {
         super.viewDidLoad()
         setupContainerView()
@@ -299,7 +318,24 @@ class FlexibleUICollectionView: UIViewController{
         }
         sender.setTranslation(.zero, in: view.superview)
     }
-    
+    private func updateTextFontSize(){
+        let indexPath = IndexPath(item: 0, section: 1)
+        if let cell = collectionView.cellForItem(at: indexPath)
+            as? TextViewCell {
+            cell.setFontSize(fontSize: self.fontSize)
+        }
+    }
+    private func increaseFontSize(){
+        self.fontSize = self.fontSize + 2
+        self.fontSize = min(30,self.fontSize)
+        updateTextFontSize()
+    }
+
+    private func reduceFontSize(){
+        self.fontSize = self.fontSize - 2
+        self.fontSize = max(6,self.fontSize)
+        updateTextFontSize()
+    }
 }
 
 // MARK: - 数据源
@@ -322,10 +358,26 @@ extension FlexibleUICollectionView: UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TextViewCell.identifier, for: indexPath) as! TextViewCell
             return cell
         }
-        if indexPath.section == 2 && indexPath.item==1{
+        
+        if indexPath.section == 2 && indexPath.item==2{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ButtonCell.identifier, for: indexPath) as! ButtonCell
+            cell.reduceFontSizeTitle()
+            cell.onFontSizeReduced = { [weak self] in
+                self?.reduceFontSize()
+            }
             return cell
         }
+        
+        if indexPath.section == 2 && indexPath.item==1{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ButtonCell.identifier, for: indexPath) as! ButtonCell
+            cell.increaseFontSizeTitle()
+            cell.onFontSizeIncreased = { [weak self] in
+                self?.increaseFontSize()
+            }
+            
+            return cell
+        }
+        
         
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: CustomCollectionViewCell.identifier,
