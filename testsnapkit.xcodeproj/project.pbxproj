@@ -6,8 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		D03F7C5F887B5D2A5E7A46AE /* Pods_testsnapkit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6852FAC767ABAE02C396A4D /* Pods_testsnapkit.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		45A16DE92DEBF1D500940A66 /* testsnapkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testsnapkit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6852FAC767ABAE02C396A4D /* Pods_testsnapkit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_testsnapkit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA2D6F62698D4FC6DC8575F4 /* Pods-testsnapkit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-testsnapkit.debug.xcconfig"; path = "Target Support Files/Pods-testsnapkit/Pods-testsnapkit.debug.xcconfig"; sourceTree = "<group>"; };
+		E6BE3CAFD1A528FCD0535269 /* Pods-testsnapkit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-testsnapkit.release.xcconfig"; path = "Target Support Files/Pods-testsnapkit/Pods-testsnapkit.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -36,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D03F7C5F887B5D2A5E7A46AE /* Pods_testsnapkit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,6 +55,8 @@
 			children = (
 				45A16DEB2DEBF1D500940A66 /* testsnapkit */,
 				45A16DEA2DEBF1D500940A66 /* Products */,
+				964BF7FDA254CA9B3A0FBC30 /* Pods */,
+				CBE12052194DB1D8AEF05180 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,6 +68,23 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		964BF7FDA254CA9B3A0FBC30 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CA2D6F62698D4FC6DC8575F4 /* Pods-testsnapkit.debug.xcconfig */,
+				E6BE3CAFD1A528FCD0535269 /* Pods-testsnapkit.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		CBE12052194DB1D8AEF05180 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A6852FAC767ABAE02C396A4D /* Pods_testsnapkit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -65,9 +92,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 45A16DFC2DEBF1D600940A66 /* Build configuration list for PBXNativeTarget "testsnapkit" */;
 			buildPhases = (
+				E91F0E7008F425B4587CB37A /* [CP] Check Pods Manifest.lock */,
 				45A16DE52DEBF1D500940A66 /* Sources */,
 				45A16DE62DEBF1D500940A66 /* Frameworks */,
 				45A16DE72DEBF1D500940A66 /* Resources */,
+				436ACFC4C3E3C9AE857CC83E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -77,8 +106,6 @@
 				45A16DEB2DEBF1D500940A66 /* testsnapkit */,
 			);
 			name = testsnapkit;
-			packageProductDependencies = (
-			);
 			productName = testsnapkit;
 			productReference = 45A16DE92DEBF1D500940A66 /* testsnapkit.app */;
 			productType = "com.apple.product-type.application";
@@ -127,6 +154,52 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		436ACFC4C3E3C9AE857CC83E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-testsnapkit/Pods-testsnapkit-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-testsnapkit/Pods-testsnapkit-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-testsnapkit/Pods-testsnapkit-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E91F0E7008F425B4587CB37A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-testsnapkit-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		45A16DE52DEBF1D500940A66 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -140,11 +213,13 @@
 /* Begin XCBuildConfiguration section */
 		45A16DFD2DEBF1D600940A66 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CA2D6F62698D4FC6DC8575F4 /* Pods-testsnapkit.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = testsnapkit/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -167,11 +242,13 @@
 		};
 		45A16DFE2DEBF1D600940A66 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E6BE3CAFD1A528FCD0535269 /* Pods-testsnapkit.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = testsnapkit/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

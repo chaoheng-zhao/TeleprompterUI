@@ -1,19 +1,18 @@
-//
-//  ViewController.swift
-//  testsnapkit
-//
-//  Created by zch on 2025/6/1.
-//
-
 import UIKit
 
+// MARK: - 主视图控制器
 class ViewController: UIViewController {
-
+//    let
+    let flexibleUICollectionView = FlexibleUICollectionView()
+//    let uiExample = UIExample()
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        addChild(flexibleUICollectionView)
+        view.addSubview(flexibleUICollectionView.view)
+        flexibleUICollectionView.didMove(toParent: self)
+        
+//        addChild(uiExample)
+//        view.addSubview(uiExample.view)
+//        uiExample.didMove(toParent: self)
     }
-
-
 }
-

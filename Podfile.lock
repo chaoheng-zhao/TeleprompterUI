@@ -1,0 +1,22 @@
+PODS:
+  - SnapKit (5.6.0)
+
+DEPENDENCIES:
+  - SnapKit (from `https://gitee.com/mirrors/SnapKit.git`, branch `5.6.0`)
+
+EXTERNAL SOURCES:
+  SnapKit:
+    :branch: 5.6.0
+    :git: https://gitee.com/mirrors/SnapKit.git
+
+CHECKOUT OPTIONS:
+  SnapKit:
+    :commit: f222cbdf325885926566172f6f5f06af95473158
+    :git: https://gitee.com/mirrors/SnapKit.git
+
+SPEC CHECKSUMS:
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+
+PODFILE CHECKSUM: 4a993befe2930f365055c324dceae5a3cb9b6f3e
+
+COCOAPODS: 1.16.2
